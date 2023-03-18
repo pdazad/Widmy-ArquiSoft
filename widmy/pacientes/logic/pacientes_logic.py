@@ -1,6 +1,6 @@
 from ..models import Paciente
 
-def create_paciente(request):
+def create_patient(request):
     paciente = Paciente(
         nombre = request['nombre'], 
         edad = request['edad'], 

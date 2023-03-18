@@ -1,9 +1,9 @@
 from django.db import models
 
-from historiasClinicas.models import historiaClinica #Toca importarlo para definir la relación de Many to One
+from historiasClinicas.models import HistoriaClinica
 
-class Pacientes(models.Model):
-    historiaClinica = models.ForeignKey(historiaClinica, on_delete=models.CASCADE, default=None, null = True, blank = True) #llave foránea, relación many to one entre los modelos de Measurement y Variable.
+class Paciente(models.Model):
+    historiaClinica = models.ForeignKey(HistoriaClinica, on_delete=models.CASCADE, default=None, null = True, blank = True) #llave foránea, relación many to one entre los modelos de Measurement y Variable.
     nombre = models.CharField(max_length=50)
     edad = models.CharField(max_length=3)
     identificacion = models.CharField(max_length=15)
