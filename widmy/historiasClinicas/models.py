@@ -5,7 +5,3 @@ class HistoriaClinica(models.Model):
     fecha_ultima_actualizacion: models.DateField()
 
 
-class Reporte(models.Model):
-    fecha = models.DateField()
-    descripcion = models.CharField(max_length = 50)
-    
