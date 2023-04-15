@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'historiasClinicas',
     'medicos',
     'pacientes',
+    'historiasClinicasUpdate',
+    'historiasClinicasRead', 
 ]
 
 MIDDLEWARE = [
