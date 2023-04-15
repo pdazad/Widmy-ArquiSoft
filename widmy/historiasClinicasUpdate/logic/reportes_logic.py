@@ -1,12 +1,13 @@
 from ..models import ReporteHistoria
 from datetime import datetime
+from historiasClinicas.models import HistoriaClinica
 
 def add_report(request):
-    fechafinal = datetime.strptime(request['fecha'], '%Y-%m-%d')
+    fecha = datetime.strptime(request['fecha'], '%Y-%m-%d')
     reporte = ReporteHistoria(
-        fechafinal,
+        fecha = fecha,
         descripcion = request['descripcion'],
-        HistoriaClinica = request['historiaClinica']
+        HistoriaClinica = HistoriaClinica.objects.get(id=request['historiaClinica'])
     )
     reporte.save()
     return reporte
