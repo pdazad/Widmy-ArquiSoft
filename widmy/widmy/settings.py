@@ -97,7 +97,7 @@ WSGI_APPLICATION = 'widmy.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql1',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'Qy7A9NTbRLTxuzeoefHc',
