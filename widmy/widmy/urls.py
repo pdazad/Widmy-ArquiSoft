@@ -23,5 +23,6 @@ urlpatterns = [
     path('pacientes/', include('pacientes.urls')),
     path('historiasClinicas/', include('historiasClinicas.urls')),
     path('historiasClinicasUpdate/', include('historiasClinicasUpdate.urls')),
-    
+    path(r'', include('django.contrib.auth.urls')),
+    path(r'', include('social_django.urls')),
 ]
