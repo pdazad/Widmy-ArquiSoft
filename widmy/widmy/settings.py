@@ -36,7 +36,9 @@ HOSTNAME = os.environ.get("HOST")
 
 HTTPS = "https" if os.environ.get("HTTPS") == "True" else "http"
 
-LOGOUT_REDIRECT_URL = f"https://{SOCIAL_AUTH_AUTH0_DOMAIN}/v2/logout?returnTo={HTTPS}%3A%2F%2F{HOSTNAME}" 
+LOGOUT_REDIRECT_URL = f"https://{SOCIAL_AUTH_AUTH0_DOMAIN}/v2/logout?returnTo={HTTPS}%3A%2F%2F{HOSTNAME}"
+
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = os.environ.get("HTTPS") == "True"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
