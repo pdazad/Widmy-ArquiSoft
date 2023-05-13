@@ -18,12 +18,11 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('', views.index),
     path('admin/', admin.site.urls),
     path('health-check/', views.healthCheck),
     path('pacientes/', include('pacientes.urls')),
     path('historiasClinicas/', include('historiasClinicas.urls')),
     path('historiasClinicasUpdate/', include('historiasClinicasUpdate.urls')),
-    path('', include('django.contrib.auth.urls')),
-    path('', include('social_django.urls')),
+    path(r'', include('django.contrib.auth.urls')),
+    path(r'', include('social_django.urls')),
 ]
