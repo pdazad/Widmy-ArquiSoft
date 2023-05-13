@@ -11,35 +11,41 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+import dotenv
+
+dotenv.load_dotenv('../.env')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 LOGIN_URL = "/login/auth0"
 LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "https://widmy-arquisoft.us.auth0.com/v2/logout?returnTo=http%3A%2F%2Fip_publica_instancia:8080" 
 
 SOCIAL_AUTH_TRAILING_SLASH = False # Remove end slash from routes 
-SOCIAL_AUTH_AUTH0_DOMAIN = 'widmy-arquisoft.us.auth0.com' 
-SOCIAL_AUTH_AUTH0_KEY = 'SxFfJOMbjbtctENMSxodKEEZ0QURZ3kA' 
-SOCIAL_AUTH_AUTH0_SECRET = 'rpIZ06X74xFXvI5aX9Bky7gMjKYlzVdVb9jQx362Gp9SZqv5iyLSVdYXkm06aAtQ' 
-SOCIAL_AUTH_AUTH0_SCOPE = [ 'openid',
-                            'profile',
-                            'email',
-                            'role', ] 
+SOCIAL_AUTH_AUTH0_DOMAIN = os.environ.get('AUTH0_DOMAIN')
+SOCIAL_AUTH_AUTH0_KEY = os.environ.get('AUTH0_KEY')
+SOCIAL_AUTH_AUTH0_SECRET = os.environ.get('AUTH0_SECRET')
+SOCIAL_AUTH_AUTH0_SCOPE = [ 'openid', 'profile', 'email', 'role']
 
-AUTHENTICATION_BACKENDS = { 'monitoring.auth0backend.Auth0',
+AUTHENTICATION_BACKENDS = { 'widmy.auth0backend.Auth0',
                             'django.contrib.auth.backends.ModelBackend',
                               }
+
+HOSTNAME = os.environ.get("HOST")
+
+HTTPS = "https" if os.environ.get("HTTPS") == "True" else "http"
+
+LOGOUT_REDIRECT_URL = f"https://{SOCIAL_AUTH_AUTH0_DOMAIN}/v2/logout?returnTo={HTTPS}%3A%2F%2F{HOSTNAME}" 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-0-ain=iyff^kzfjsi_-_ox44^ua@3e7q^*w@)zv5u_=4ky8jaz'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG') == 'True'
 
 ALLOWED_HOSTS = ['*']
 
@@ -95,14 +101,23 @@ WSGI_APPLICATION = 'widmy.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
+
+if os.environ.get('POSTGRES_PASSWORD'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'postgres',
+            'USER': 'postgres',
+            'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+            'HOST': os.environ.get('POSTGRES_HOST'),
+            'PORT': '5432',
+        }
+    }
+else:
+    DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'Qy7A9NTbRLTxuzeoefHc',
-        'HOST': '35.239.34.18',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase.sqlite3',
     }
 }
 
