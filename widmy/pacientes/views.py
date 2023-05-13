@@ -12,7 +12,7 @@ from widmy.auth0backend import getRole
 @login_required
 def create_patient(request):
     role = getRole(request)
-    if role in ['Personal Administrativo', 'Administrador']:
+    if role in ['Personal Administrativo', 'Administrador', 'Enfermero']:
     #doctor = get_object_or_404(Medicos, id=doctor_id)
         if request.method == 'POST':
             patient_dto = pl.create_patient(json.loads(request.body))
