@@ -28,7 +28,6 @@ class Auth0(BaseOAuth2):
         headers = {'authorization': 'Bearer ' + response['access_token']} 
         resp = requests.get(url, headers=headers)
         userinfo = resp.json()
-        print(userinfo)
         return {'username': userinfo['nickname'],
                 'first_name': userinfo['name'],
                 'picture': userinfo['picture'], 
