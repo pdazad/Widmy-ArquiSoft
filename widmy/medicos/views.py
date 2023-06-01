@@ -1,14 +1,14 @@
 from django.http import HttpResponse
 from .models import Medicos
 from django.http import HttpResponseBadRequest
-from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.decorators import login_required
-from widmy.auth0backend import getRole
+from widmy.auth import getRole
+import logging
 
-@csfr_exempt
-@login_required
 def create_medico(request):
     role = getRole(request)
+
+    logging.warning(role)
+
     if role in ['Administrador']:
         if request.method == 'POST':
             nombre = request.POST['nombre']

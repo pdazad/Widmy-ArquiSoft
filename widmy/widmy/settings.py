@@ -14,31 +14,14 @@ from pathlib import Path
 import os
 import dotenv
 
-dotenv.load_dotenv('../.env')
+dotenv.load_dotenv('.env')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-LOGIN_URL = "/login/auth0"
-LOGIN_REDIRECT_URL = "/"
-
-SOCIAL_AUTH_TRAILING_SLASH = False # Remove end slash from routes 
-SOCIAL_AUTH_AUTH0_DOMAIN = os.environ.get('AUTH0_DOMAIN')
-SOCIAL_AUTH_AUTH0_KEY = os.environ.get('AUTH0_KEY')
-SOCIAL_AUTH_AUTH0_SECRET = os.environ.get('AUTH0_SECRET')
-SOCIAL_AUTH_AUTH0_SCOPE = [ 'openid', 'profile', 'email', 'role']
-
-AUTHENTICATION_BACKENDS = { 'widmy.auth0backend.Auth0',
-                            'django.contrib.auth.backends.ModelBackend',
-                              }
-
 HOSTNAME = os.environ.get("HOST")
 
 HTTPS = "https" if os.environ.get("HTTPS") == "True" else "http"
-
-LOGOUT_REDIRECT_URL = f"https://{SOCIAL_AUTH_AUTH0_DOMAIN}/v2/logout?returnTo={HTTPS}%3A%2F%2F{HOSTNAME}"
-
-SOCIAL_AUTH_REDIRECT_IS_HTTPS = os.environ.get("HTTPS") == "True"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -51,6 +34,9 @@ DEBUG = os.environ.get('DEBUG') == 'True'
 
 ALLOWED_HOSTS = ['*']
 
+# settings.py
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_NAME = 'session_django'
 
 # Application definition
 
@@ -66,7 +52,6 @@ INSTALLED_APPS = [
     'pacientes',
     'historiasClinicasUpdate',
     'historiasClinicasRead', 
-    'social_django',
 ]
 
 MIDDLEWARE = [
